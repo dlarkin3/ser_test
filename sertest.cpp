@@ -35,28 +35,22 @@ int main() {
 	// serialPort0.Write("Hello");
     const char *sendString = "H\n"; 
     std::string readData;
+long last = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now()).time_since_epoch()).count();
 
 	// Read some data back
     while(keep_running) {
 
 long start = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now()).time_since_epoch()).count();
 
-        //auto start = chrono::steady_clock::now();
-        serialPort.Write(sendString);
-        //auto aftr_wrt = chrono::steady_clock::now();
-long aftr_wrt = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now()).time_since_epoch()).count();
-
         //std::cout << "Top of loop\n";
         serialPort.Read(readData);
         //std::cout << "Received data: " << readData;
         //auto end = chrono::steady_clock::now();
-long end = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now()).time_since_epoch()).count();
-        myfile << start
+       myfile << start
              << ","
-            << aftr_wrt
-             << ","
-            << end
+            << last
             << "," << std::endl;
+last = start;
     }
 //<< chrono::duration_cast<chrono::nanoseconds>(end - start).count()
 cout << "exiting cleanly"<< std::endl;

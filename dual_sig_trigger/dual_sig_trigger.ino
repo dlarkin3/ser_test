@@ -18,13 +18,15 @@ void setup()
   pinMode(rgb_pin, OUTPUT);
   pinMode(lwir_pin, OUTPUT);
   Serial.begin(9600);
-} // Set digital pins 12 and 13 to outputs
+} 
 
 void loop()
 {
-  Serial.write(45); // send a byte with the value 45
+  if (!digitalRead(rgb_pin)){
+    Serial.write(45); // send a byte with the value 45 before start of high signal
+  }
   digitalWrite(rgb_pin, !digitalRead(rgb_pin));  
-  delayMicroseconds(offset);  //30 microsecond delay  
+  delayMicroseconds(offset);  // Delay between singles
   digitalWrite(lwir_pin, !digitalRead(lwir_pin));  
-  delayMicroseconds(halfP);  //30 microsecond delay   
+  delayMicroseconds(halfP);  // Delay to achieve desired Hz  
 }
